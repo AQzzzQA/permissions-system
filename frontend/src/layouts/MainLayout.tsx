@@ -7,6 +7,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
   CrownOutlined,
+  AppstoreAddOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -43,6 +44,11 @@ const MainLayout: React.FC = () => {
       key: '/permissions',
       icon: <SettingOutlined />,
       label: '权限管理',
+    },
+    {
+      key: '/skills',
+      icon: <AppstoreAddOutlined />,
+      label: '技能管理',
     },
   ];
 

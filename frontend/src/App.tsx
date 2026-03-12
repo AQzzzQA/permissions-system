@@ -10,6 +10,7 @@ import Workspaces from './pages/Workspaces';
 import Users from './pages/Users';
 import Roles from './pages/Roles';
 import Permissions from './pages/Permissions';
+import Skills from './pages/Skills';
 import TestPage from './test-page';
 import ErrorBoundary from './ErrorBoundary';
 
@@ -48,6 +49,7 @@ function App() {
                 <Route path="users" element={<Users />} />
                 <Route path="roles" element={<Roles />} />
                 <Route path="permissions" element={<Permissions />} />
+                <Route path="skills" element={<Skills />} />
               </Route>
             </Routes>
           </AuthProvider>

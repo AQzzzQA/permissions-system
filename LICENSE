@@ -1,0 +1,83 @@
+MIT License
+
+Copyright (c) 2026 乐盟互动 (Lemeng Interactive)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## 项目版权信息
+
+**项目名称**: OpenClaw 权限控制系统  
+**出品方**: 乐盟互动 (Lemeng Interactive)  
+**版本**: 1.2.0  
+**发布日期**: 2026-03-12  
+
+## 相关声明
+
+1. **商标声明**: OpenClaw 是 OpenClaw 项目组的项目名称，本项目仅为相关技术实现，不包含 OpenClaw 官方软件。
+2. **技术独立**: 本项目为独立的权限管理系统，与 OpenClaw Gateway 项目是两个独立的技术实现。
+3. **开源协议**: 本项目采用 MIT 开源协议，允许自由使用、修改和分发。
+4. **责任声明**: 使用本项目产生的任何问题或损失，开发者不承担责任。
+5. **商标保护**: 任何商业使用需尊重相关商标和知识产权。
+
+## 联系方式
+
+- **出品方**: 乐盟互动 (Lemeng Interactive)
+- **邮箱**: lemeng-interactive@example.com
+- **网址**: https://lemeng-interactive.example.com
+- **地址**: 中国上海市浦东新区张江高科技园区
+
+## 版本历史
+
+- **v1.2.0** (2026-03-12): 完整技能管理系统发布
+- **v1.1.0** (2026-03-11): 初始版本发布
+
+## 许可证详情
+
+本许可证基于 MIT 许可证，为 OpenClaw 权限控制系统专门制定。
+
+### 主要条款
+- ✅ 商业使用
+- ✅ 修改和分发
+- ✅ 私人使用
+- ✅ 开源项目集成
+- ❗ 需要包含原始许可证和版权声明
+- ❗ 不提供任何担保
+- ❗ 开发者不承担责任
+
+### 使用示例
+```javascript
+// 允许的使用方式
+const permissionsSystem = require('permissions-system');
+const config = permissionsSystem.createConfig({
+  database: {
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'password'
+  }
+});
+```
+
+### 禁止条款
+- 移除或修改版权声明
+- 用于非法或不道德的目的
+- 侵犯第三方知识产权
+- 将项目冒充为官方 OpenClaw 项目

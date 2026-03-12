@@ -10,6 +10,15 @@ export default defineConfig({
     },
   },
   base: '/admin/',
+  root: process.cwd(),
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+      },
+    },
+  },
   server: {
     port: 3000,
     proxy: {

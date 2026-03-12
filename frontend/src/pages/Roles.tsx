@@ -13,6 +13,7 @@ import {
   Card,
   Drawer,
   Checkbox,
+  Divider,
 } from 'antd';
 import {
   PlusOutlined,

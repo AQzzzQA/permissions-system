@@ -14,6 +14,7 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
+export { pool };
 export default pool;
 
 // 测试数据库连接

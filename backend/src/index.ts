@@ -10,6 +10,7 @@ import workspaceRoutes from './workspaces/workspaces.controller';
 import usersRoutes from './users/users.controller';
 import rolesRoutes from './roles/roles.controller';
 import permissionsRoutes from './permissions/permissions.controller';
+import skillsRoutes from './skills/skills.routes';
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use('/api/workspaces', workspaceRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/permissions', permissionsRoutes);
+app.use('/api', skillsRoutes);
 
 // 初始化超级管理员
 app.post('/api/init-superadmin', async (req, res) => {
@@ -95,6 +97,7 @@ async function startServer() {
       console.log(`   - Users: http://localhost:${port}/api/users`);
       console.log(`   - Roles: http://localhost:${port}/api/roles`);
       console.log(`   - Permissions: http://localhost:${port}/api/permissions`);
+      console.log(`   - Skills: http://localhost:${port}/api/skills`);
       console.log(``);
       console.log(`👑 超级管理员初始化:`);
       console.log(`   POST http://localhost:${port}/api/init-superadmin`);
