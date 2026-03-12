@@ -1,0 +1,10 @@
+{
+  "public": "dist",
+  "cleanUrls": false,
+  "rewrites": [
+    {
+      "source": "/admin/*",
+      "destination": "/$1"
+    }
+  ]
+}
