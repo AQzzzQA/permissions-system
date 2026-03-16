@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # MySQL数据库
+  db:
+    image: mysql:8.0
+    container_name: permissions_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${DB_NAME:-openclaw_permissions}
+      MYSQL_USER: ${DB_USER:-admin}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-admin_password}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-root_password}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - permissions_network
+
+  # 后端服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: permissions_backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-8001}:8001"
+    environment:
+      NODE_ENV: production
+      PORT: 8001
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-admin_password}
+      DB_NAME: ${DB_NAME:-openclaw_permissions}
+      JWT_SECRET: ${JWT_SECRET:-change_this_secret}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-24h}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      SUPERADMIN_EMAIL: ${SUPERADMIN_EMAIL:-admin@example.com}
+      SUPERADMIN_PASSWORD: ${SUPERADMIN_PASSWORD:-Admin123!}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - permissions_network
+
+  # 前端服务
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_BASE_URL=/admin/api
+    container_name: permissions_frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    environment:
+      - VITE_API_BASE_URL=/admin/api
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - permissions_network
+
+volumes:
+  mysql_data:
+
+networks:
+  permissions_network:
+    driver: bridge
