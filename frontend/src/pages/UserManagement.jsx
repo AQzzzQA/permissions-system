@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Table, Button, Space, Modal, Form, Input, Select, message } from 'antd'
-import axios from 'axios'
+import request from '../api/request'
 
 const UserManagement = () => {
   const [users, setUsers] = useState([])
@@ -11,10 +11,11 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     setLoading(true)
     try {
-      const response = await axios.get('/api/users')
-      setUsers(response.data.data)
+      const response = await request.get('/users')
+      setUsers(response.data || [])
     } catch (error) {
-      message.error('获取用户列表失败')
+      console.error('Fetch users error:', error)
+      message.error(error.response?.data?.message || '获取用户列表失败')
     } finally {
       setLoading(false)
     }
@@ -49,12 +50,13 @@ const UserManagement = () => {
 
   const handleSubmit = async (values) => {
     try {
-      await axios.post('/api/users', values)
+      await request.post('/users', values)
       message.success('用户创建成功')
       setModalVisible(false)
       fetchUsers()
     } catch (error) {
-      message.error('用户创建失败')
+      console.error('Create user error:', error)
+      message.error(error.response?.data?.message || '用户创建失败')
     }
   }
 
@@ -70,6 +72,7 @@ const UserManagement = () => {
         dataSource={users}
         loading={loading}
         rowKey="id"
+        scroll={{ x: 'max-content' }}
       />
 
       <Modal

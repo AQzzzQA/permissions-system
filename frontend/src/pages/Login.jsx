@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Form, Input, Button, Card, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import axios from 'axios'
+import request from '../api/request'
 
 const Login = ({ onLogin }) => {
   const [loading, setLoading] = useState(false)
@@ -9,8 +10,8 @@ const Login = ({ onLogin }) => {
   const handleLogin = async (values) => {
     setLoading(true)
     try {
-      const response = await axios.post('/api/auth/login', values)
-      const { token, user } = response.data
+      const response = await request.post('/auth/login', values)
+      const { token, user } = response
 
       // 保存token
       localStorage.setItem('token', token)
@@ -19,7 +20,8 @@ const Login = ({ onLogin }) => {
       message.success('登录成功')
       onLogin()
     } catch (error) {
-      message.error('登录失败，请检查用户名和密码')
+      console.error('Login error:', error)
+      message.error(error.response?.data?.message || '登录失败，请检查用户名和密码')
     } finally {
       setLoading(false)
     }
@@ -31,11 +33,12 @@ const Login = ({ onLogin }) => {
       justifyContent: 'center',
       alignItems: 'center',
       minHeight: '100vh',
-      background: '#f0f2f5'
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '20px'
     }}>
       <Card
         title="OpenClaw 权限管理系统"
-        style={{ width: 400 }}
+        style={{ width: '100%', maxWidth: 400 }}
       >
         <Form
           name="login"

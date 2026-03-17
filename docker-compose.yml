@@ -12,7 +12,7 @@ services:
       MYSQL_USER: ${DB_USER:-admin}
       MYSQL_PASSWORD: ${DB_PASSWORD:-admin_password}
     ports:
-      - "${DB_PORT:-3306}:3306"
+      - "${DB_PORT:-3310}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
@@ -52,7 +52,7 @@ services:
       - ./backend:/app
       - /app/node_modules
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8001/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -66,13 +66,13 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_BASE_URL=/admin/api
+        - VITE_API_BASE_URL=http://43.156.131.98:8001/api
     container_name: permissions_frontend
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT:-3000}:80"
     environment:
-      - VITE_API_BASE_URL=/admin/api
+      - VITE_API_BASE_URL=http://43.156.131.98:8001/api
     depends_on:
       backend:
         condition: service_healthy
