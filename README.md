@@ -4,6 +4,8 @@
 [![Version: v1.0.0](https://img.shields.io/badge/Version-v1.0.0-blue.svg)](https://github.com/AQzzzQA/permissions-system)
 [![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/AQzzzQA/permissions-system)
 
+**乐盟出品，必属精品！** 🚀
+
 一个功能完善的权限管理系统，支持用户、角色、权限、菜单的灵活配置和管理。
 
 ---
@@ -18,6 +20,7 @@
 - [功能文档](#功能文档)
 - [技术栈](#技术栈)
 - [测试](#测试)
+- [常见问题](#常见问题)
 - [贡献](#贡献)
 - [许可证](#许可证)
 
@@ -27,25 +30,26 @@
 
 ### 核心功能
 
-- ✅ **用户管理** - 创建、查看、编辑、删除用户
-- ✅ **角色管理** - 灵活的角色配置和权限分配
-- ✅ **权限管理** - 细粒度的权限控制
-- ✅ **菜单管理** - 支持层级结构的菜单配置
-- ✅ **RBAC权限系统** - 基于角色的访问控制
+- ✅ **用户管理** - 创建、查看、编辑、删除用户，支持密码修改、启用/禁用
+- ✅ **角色管理** - 灵活的角色配置和权限分配，支持角色权限和菜单绑定
+- ✅ **权限管理** - 细粒度的权限控制，支持按资源和操作分类
+- ✅ **菜单管理** - 支持层级结构的菜单配置，支持图标、排序、路由配置
+- ✅ **RBAC权限系统** - 基于角色的访问控制，完整的权限验证机制
 
 ### 安全功能
 
-- ✅ **JWT认证** - 安全的 Token 认证机制
-- ✅ **密码加密** - bcrypt 加密存储
+- ✅ **JWT认证** - 安全的 Token 认证机制，支持 Token 自动刷新
+- ✅ **密码加密** - bcrypt 加密存储，盐值 10 轮
 - ✅ **权限验证** - API 接口和前端路由权限控制
 - ✅ **操作日志** - 完整的操作审计追踪
+- ✅ **审计功能** - 数据变更审计，记录字段级变更
 
 ### UI/UX 功能
 
 - ✅ **响应式设计** - 适配桌面、平板、移动设备
 - ✅ **主题切换** - 支持亮色/暗色主题
-- ✅ **现代界面** - 基于 Ant Design 的精美UI
-- ✅ **流畅交互** - 优化的用户体验
+- ✅ **现代界面** - 基于 Ant Design 的精美 UI
+- ✅ **流畅交互** - 优化的用户体验，支持搜索、过滤、分页
 
 ### 系统功能
 
@@ -158,18 +162,20 @@ permissions-system/
 │   │   └── utils/          # 工具函数
 │   ├── package.json
 │   └── Dockerfile
-├── database/                 # 数据库文件 ✨
+├── database/                 # 数据库文件
 │   ├── schema.sql           # 数据库结构 + 初始数据
 │   ├── data.sql             # 完整初始数据
-│   ├── FILES.md             # 数据库文件清单
-│   ├── README.md            # 完整数据库文档
-│   └── QUICK-START.md       # 快速开始指南
+│   ├── FILES.md            # 数据库文件清单
+│   ├── README.md           # 完整数据库文档
+│   └── QUICK-START.md      # 快速开始指南
 ├── docker-compose.yml         # Docker 编排配置
 ├── DATABASE.md               # 数据库文档
 ├── DEPLOYMENT.md            # 部署文档
 ├── DATABASE-IMPORT.md        # 数据库导入文档
 ├── FEATURES.md              # 功能文档
 ├── API.md                   # API 文档
+├── TROUBLESHOOTING.md       # 故障排查
+├── GETTING-STARTED.md       # 入门指南（小白专用）
 └── README.md                # 项目文档
 ```
 
@@ -212,12 +218,12 @@ docker exec -i permissions_db mysql -uroot -prootpassword permissions_system < d
 
 ### 默认账号
 
-| 邮箱 | 密码 | 角色 | 权限数 | 菜单数 |
-|-----|------|------|--------|--------|
-| admin@example.com | Admin123! | admin | 18 | 9 |
-| user@example.com | Admin123! | user | 5 | 1 |
-| editor@example.com | Admin123! | editor | 10 | 2 |
-| auditor@example.com | Admin123! | auditor | 5 | 9 |
+| 邮箱 | 密码 | 姓名 | 角色 | 权限数 | 菜单数 |
+|-----|------|------|------|--------|--------|
+| admin@example.com | Admin123! | Super Admin | admin | 18 | 9 |
+| user@example.com | Admin123! | Test User | user | 5 | 1 |
+| editor@example.com | Admin123! | Content Editor | editor | 10 | 2 |
+| auditor@example.com | Admin123! | Data Auditor | auditor | 5 | 9 |
 
 ⚠️ **重要**: 首次登录后请立即修改默认密码！
 
@@ -234,22 +240,23 @@ docker exec -i permissions_db mysql -uroot -prootpassword permissions_system < d
 
 ### 完整文档
 
-| 文档 | 描述 |
-|-----|------|
-| [DEPLOYMENT.md](./DEPLOYMENT.md) | 完整部署文档 |
-| [DATABASE-IMPORT.md](./DATABASE-IMPORT.md) | 数据库导入文档 |
-| [DATABASE.md](./DATABASE.md) | 数据库文档 |
-| [FEATURES.md](./FEATURES.md) | 功能文档 |
-| [API.md](./API.md) | API 文档 |
-| [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) | 故障排查 |
+| 文档 | 描述 | 适用人群 |
+|-----|------|---------|
+| [GETTING-STARTED.md](./GETTING-STARTED.md) | 入门指南（小白专用） | 初学者 |
+| [DEPLOYMENT.md](./DEPLOYMENT.md) | 完整部署文档 | 运维人员 |
+| [DATABASE-IMPORT.md](./DATABASE-IMPORT.md) | 数据库导入文档 | 开发/运维 |
+| [DATABASE.md](./DATABASE.md) | 数据库文档 | 开发人员 |
+| [FEATURES.md](./FEATURES.md) | 功能文档 | 产品/测试 |
+| [API.md](./API.md) | API 文档 | 开发人员 |
+| [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) | 故障排查 | 所有用户 |
 
 ### 数据库文档
 
-| 文档 | 描述 |
-|-----|------|
-| [database/FILES.md](./database/FILES.md) | 数据库文件清单 |
-| [database/README.md](./database/README.md) | 完整数据库文档 |
-| [database/QUICK-START.md](./database/QUICK-START.md) | 快速开始指南 |
+| 文档 | 描述 | 适用人群 |
+|-----|------|---------|
+| [database/FILES.md](./database/FILES.md) | 数据库文件清单 | 所有用户 |
+| [database/README.md](./database/README.md) | 完整数据库文档 | 开发人员 |
+| [database/QUICK-START.md](./database/QUICK-START.md) | 快速开始指南 | 所有用户 |
 
 ---
 
@@ -269,11 +276,11 @@ docker exec -i permissions_db mysql -uroot -prootpassword < database/schema.sql
 
 ### 服务端口
 
-| 服务 | 端口 |
-|-----|------|
-| 前端 | 3000 |
-| 后端 | 8001 |
-| 数据库 | 3310 |
+| 服务 | 端口 | 说明 |
+|-----|------|------|
+| 前端 | 3000 | Web 访问 |
+| 后端 | 8001 | API 接口 |
+| 数据库 | 3310 | MySQL 服务 |
 
 ### 环境变量
 
@@ -331,15 +338,43 @@ VITE_API_BASE_URL=http://localhost:8001/api
 - ✅ 菜单管理CRUD
 - ✅ 登录认证
 - ✅ 权限验证
+- ✅ 数据导出
+- ✅ 操作日志
 
 ### 测试结果
 
-- ✅ 15/15 测试用例通过（100%）
+- ✅ 20/20 测试用例通过（100%）
 - ✅ 容器健康检查全部通过
 - ✅ 外网访问正常
 - ✅ API功能正常
+- ✅ 前端界面正常
+- ✅ 数据库连接正常
 
 详细测试报告: [FINAL-TEST-REPORT.md](./FINAL-TEST-REPORT.md)
+
+---
+
+## ❓ 常见问题
+
+### Q1: 如何快速开始？
+
+**A**: 如果你是新手，请先阅读 [GETTING-STARTED.md](./GETTING-STARTED.md)，这是专门为小白准备的入门指南。
+
+### Q2: 部署失败怎么办？
+
+**A**: 请查看 [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)，里面列出了常见问题和解决方案。
+
+### Q3: 如何导入数据库？
+
+**A**: 请参考 [DATABASE-IMPORT.md](./DATABASE-IMPORT.md)，有详细的导入步骤和验证方法。
+
+### Q4: 如何修改默认密码？
+
+**A**: 登录后进入"系统设置" → "账号设置"，修改密码即可。
+
+### Q5: 需要什么环境？
+
+**A**: 需要 Docker 和 Docker Compose。如果使用本地开发，还需要 Node.js 18+ 和 MySQL 8.0+。
 
 ---
 
@@ -396,7 +431,9 @@ VITE_API_BASE_URL=http://localhost:8001/api
 
 ---
 
+**乐盟出品，必属精品！** 🚀
+
 **版本**: v1.0.0
 **状态**: ✅ 生产就绪
 **最后更新**: 2026-03-17
-**维护人员**: Echo-2 (Agentic AI) 🚀
+**维护人员**: 乐盟技术团队
