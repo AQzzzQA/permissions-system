@@ -1,42 +1,140 @@
 # Permissions System - 权限管理系统
 
-**版本**: v1.0.0
-**最后更新**: 2026-03-17
-**状态**: ✅ 生产就绪
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version: v1.0.0](https://img.shields.io/badge/Version-v1.0.0-blue.svg)](https://github.com/AQzzzQA/permissions-system)
+[![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/AQzzzQA/permissions-system)
+
+一个功能完善的权限管理系统，支持用户、角色、权限、菜单的灵活配置和管理。
 
 ---
 
-## 📋 项目简介
+## 📋 目录
 
-一个完整的权限管理系统，支持用户、角色、权限、菜单的灵活配置和管理。
+- [功能特性](#功能特性)
+- [快速开始](#快速开始)
+- [项目结构](#项目结构)
+- [数据库](#数据库)
+- [部署](#部署)
+- [功能文档](#功能文档)
+- [技术栈](#技术栈)
+- [测试](#测试)
+- [贡献](#贡献)
+- [许可证](#许可证)
+
+---
+
+## ✨ 功能特性
 
 ### 核心功能
 
-- ✅ 用户管理（创建、编辑、删除）
-- ✅ 角色管理（角色CRUD）
-- ✅ 权限管理（权限CRUD）
-- ✅ 菜单管理（菜单CRUD）
-- ✅ RBAC权限系统
-- ✅ JWT认证
-- ✅ 响应式UI设计
+- ✅ **用户管理** - 创建、查看、编辑、删除用户
+- ✅ **角色管理** - 灵活的角色配置和权限分配
+- ✅ **权限管理** - 细粒度的权限控制
+- ✅ **菜单管理** - 支持层级结构的菜单配置
+- ✅ **RBAC权限系统** - 基于角色的访问控制
+
+### 安全功能
+
+- ✅ **JWT认证** - 安全的 Token 认证机制
+- ✅ **密码加密** - bcrypt 加密存储
+- ✅ **权限验证** - API 接口和前端路由权限控制
+- ✅ **操作日志** - 完整的操作审计追踪
+
+### UI/UX 功能
+
+- ✅ **响应式设计** - 适配桌面、平板、移动设备
+- ✅ **主题切换** - 支持亮色/暗色主题
+- ✅ **现代界面** - 基于 Ant Design 的精美UI
+- ✅ **流畅交互** - 优化的用户体验
+
+### 系统功能
+
+- ✅ **数据导出** - 支持 Excel、CSV、JSON 格式
+- ✅ **数据备份** - 数据库备份和恢复
+- ✅ **系统监控** - 实时监控系统状态
+- ✅ **日志管理** - 完整的日志记录和查询
 
 ---
 
 ## 🚀 快速开始
 
-### 访问地址
+### 方式1: Docker 部署（推荐）
 
-- **前端**: http://43.156.131.98:3000
-- **后端API**: http://43.156.131.98:8001
-- **API文档**: http://43.156.131.98:8001/docs
+#### 1. 克隆项目
 
-### 默认账号
+```bash
+git clone https://github.com/AQzzzQA/permissions-system.git
+cd permissions-system
+```
 
-| 邮箱 | 密码 | 角色 |
-|-----|------|------|
-| admin@example.com | Admin123! | 管理员 |
+#### 2. 启动服务
 
-⚠️ **重要**: 首次登录后请立即修改默认密码！
+```bash
+# 启动所有服务
+docker-compose up -d
+
+# 查看服务状态
+docker-compose ps
+```
+
+#### 3. 导入数据库
+
+```bash
+# 导入数据库结构 + 初始数据
+docker exec -i permissions_db mysql -uroot -prootpassword < database/schema.sql
+
+# 或导入完整初始数据
+docker exec -i permissions_db mysql -uroot -prootpassword permissions_system < database/data.sql
+```
+
+#### 4. 访问系统
+
+- **前端**: http://localhost:3000
+- **后端API**: http://localhost:8001
+- **默认账号**: admin@example.com / Admin123!
+
+### 方式2: 本地开发
+
+#### 1. 安装依赖
+
+```bash
+# 后端
+cd backend
+npm install
+
+# 前端
+cd frontend
+npm install
+```
+
+#### 2. 配置环境
+
+```bash
+# 复制环境变量文件
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+
+# 编辑配置
+nano backend/.env
+nano frontend/.env
+```
+
+#### 3. 启动服务
+
+```bash
+# 启动后端
+cd backend
+npm run dev
+
+# 启动前端（新终端）
+cd frontend
+npm run dev
+```
+
+#### 4. 访问系统
+
+- **前端**: http://localhost:3000
+- **后端API**: http://localhost:8001
 
 ---
 
@@ -44,45 +142,57 @@
 
 ```
 permissions-system/
-├── backend/              # 后端服务
+├── backend/                   # 后端服务
 │   ├── src/
+│   │   ├── index.js          # 入口文件
+│   │   ├── routes/          # API 路由
+│   │   ├── middleware/      # 中间件
+│   │   └── models/          # 数据模型
 │   ├── package.json
 │   └── Dockerfile
-├── frontend/             # 前端服务
+├── frontend/                  # 前端服务
 │   ├── src/
+│   │   ├── pages/           # 页面组件
+│   │   ├── components/      # 公共组件
+│   │   ├── api/            # API 接口
+│   │   └── utils/          # 工具函数
 │   ├── package.json
 │   └── Dockerfile
-├── database/             # 数据库文件 ✨
-│   ├── schema.sql       # 数据库结构 + 初始数据
-│   ├── data.sql         # 完整初始数据
-│   ├── FILES.md        # 数据库文件清单
-│   ├── README.md       # 完整数据库文档
-│   └── QUICK-START.md # 快速开始指南
-├── docker-compose.yml    # Docker编排配置
-├── DATABASE.md          # 数据库文档
-└── README.md           # 项目文档
+├── database/                 # 数据库文件 ✨
+│   ├── schema.sql           # 数据库结构 + 初始数据
+│   ├── data.sql             # 完整初始数据
+│   ├── FILES.md             # 数据库文件清单
+│   ├── README.md            # 完整数据库文档
+│   └── QUICK-START.md       # 快速开始指南
+├── docker-compose.yml         # Docker 编排配置
+├── DATABASE.md               # 数据库文档
+├── DEPLOYMENT.md            # 部署文档
+├── DATABASE-IMPORT.md        # 数据库导入文档
+├── FEATURES.md              # 功能文档
+├── API.md                   # API 文档
+└── README.md                # 项目文档
 ```
 
 ---
 
 ## 💾 数据库
 
-### 数据库文件位置
+### 数据库文件
 
 所有数据库文件位于 `database/` 目录：
 
-| 文件 | 描述 | 大小 |
+| 文件 | 大小 | 描述 |
 |-----|------|------|
-| schema.sql | 数据库结构 + 初始数据 | ~8 KB |
-| data.sql | 完整初始数据 | ~6 KB |
-| FILES.md | 数据库文件清单 | ~6 KB |
-| README.md | 完整数据库文档 | ~12 KB |
-| QUICK-START.md | 快速开始指南 | ~2 KB |
+| schema.sql | ~8 KB | 数据库结构 + 初始数据 |
+| data.sql | ~6 KB | 完整初始数据 |
+| FILES.md | ~6 KB | 数据库文件清单 |
+| README.md | ~12 KB | 完整数据库文档 |
+| QUICK-START.md | ~2 KB | 快速开始指南 |
 
-### 导入数据库
+### 快速导入
 
 ```bash
-# 方式1: 一键导入（schema.sql包含初始数据）
+# 方式1: 一键导入
 docker exec -i permissions_db mysql -uroot -prootpassword < database/schema.sql
 
 # 方式2: 分步导入
@@ -93,40 +203,68 @@ docker exec -i permissions_db mysql -uroot -prootpassword permissions_system < d
 ### 数据库结构
 
 **7个数据表**:
-- users（用户表）
-- roles（角色表）
-- permissions（权限表）
-- menus（菜单表）
-- role_permissions（角色权限关联表）
-- role_menus（角色菜单关联表）
+- `users` - 用户表
+- `roles` - 角色表
+- `permissions` - 权限表
+- `menus` - 菜单表
+- `role_permissions` - 角色权限关联表
+- `role_menus` - 角色菜单关联表
 
-**初始数据**:
-- 4个角色（admin, user, editor, auditor）
-- 18个权限
-- 9个菜单（含子菜单）
-- 4个用户（默认密码：Admin123!）
+### 默认账号
+
+| 邮箱 | 密码 | 角色 | 权限数 | 菜单数 |
+|-----|------|------|--------|--------|
+| admin@example.com | Admin123! | admin | 18 | 9 |
+| user@example.com | Admin123! | user | 5 | 1 |
+| editor@example.com | Admin123! | editor | 10 | 2 |
+| auditor@example.com | Admin123! | auditor | 5 | 9 |
+
+⚠️ **重要**: 首次登录后请立即修改默认密码！
 
 ### 详细文档
 
 - **文件清单**: [database/FILES.md](./database/FILES.md)
 - **完整文档**: [database/README.md](./database/README.md)
 - **快速开始**: [database/QUICK-START.md](./database/QUICK-START.md)
+- **数据库导入**: [DATABASE-IMPORT.md](./DATABASE-IMPORT.md)
 
 ---
 
-## 🐳 Docker 部署
+## 📖 文档
 
-### 启动服务
+### 完整文档
+
+| 文档 | 描述 |
+|-----|------|
+| [DEPLOYMENT.md](./DEPLOYMENT.md) | 完整部署文档 |
+| [DATABASE-IMPORT.md](./DATABASE-IMPORT.md) | 数据库导入文档 |
+| [DATABASE.md](./DATABASE.md) | 数据库文档 |
+| [FEATURES.md](./FEATURES.md) | 功能文档 |
+| [API.md](./API.md) | API 文档 |
+| [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) | 故障排查 |
+
+### 数据库文档
+
+| 文档 | 描述 |
+|-----|------|
+| [database/FILES.md](./database/FILES.md) | 数据库文件清单 |
+| [database/README.md](./database/README.md) | 完整数据库文档 |
+| [database/QUICK-START.md](./database/QUICK-START.md) | 快速开始指南 |
+
+---
+
+## 🔧 部署
+
+### Docker 部署（推荐）
+
+详细部署步骤请查看: [DEPLOYMENT.md](./DEPLOYMENT.md)
 
 ```bash
-# 启动所有服务
+# 快速部署
+git clone https://github.com/AQzzzQA/permissions-system.git
+cd permissions-system
 docker-compose up -d
-
-# 查看服务状态
-docker-compose ps
-
-# 查看日志
-docker-compose logs -f
+docker exec -i permissions_db mysql -uroot -prootpassword < database/schema.sql
 ```
 
 ### 服务端口
@@ -137,59 +275,49 @@ docker-compose logs -f
 | 后端 | 8001 |
 | 数据库 | 3310 |
 
----
+### 环境变量
 
-## 🔐 安全配置
+```bash
+# 后端配置
+DB_HOST=permissions_db
+DB_PORT=3306
+DB_NAME=permissions_system
+DB_USER=root
+DB_PASSWORD=rootpassword
+JWT_SECRET=your-jwt-secret-key-change-in-production
+JWT_EXPIRE=24h
 
-### JWT认证
-- 所有API请求需要JWT Token
-- Token过期时间: 24小时
-- 401错误自动跳转到登录页
-
-### 密码加密
-- 使用 bcrypt 加密
-- 盐值轮数: 10
-- 默认密码: Admin123!
-
-### RBAC权限
-- 基于角色的访问控制
-- 灵活的权限配置
-- 菜单访问控制
+# 前端配置
+VITE_API_BASE_URL=http://localhost:8001/api
+```
 
 ---
 
-## 📊 技术栈
+## 💻 技术栈
 
 ### 前端
+
 - **框架**: React 18
 - **UI库**: Ant Design 5
-- **HTTP客户端**: Axios
 - **路由**: React Router 6
+- **HTTP客户端**: Axios
+- **状态管理**: React Hooks
+- **构建工具**: Vite
 
 ### 后端
-- **框架**: Node.js + Express
+
+- **运行时**: Node.js 18
+- **框架**: Express
+- **认证**: JWT (jsonwebtoken)
+- **密码加密**: bcrypt
 - **数据库**: MySQL 8.0
-- **认证**: JWT
 - **ORM**: 自定义（无ORM）
 
 ### 基础设施
+
 - **容器**: Docker + Docker Compose
 - **Web服务器**: Nginx
-
----
-
-## 📝 文档
-
-### 项目文档
-- [DATABASE.md](./DATABASE.md) - 数据库文档
-- [DEPLOYMENT.md](./DEPLOYMENT.md) - 部署文档
-- [API.md](./API.md) - API文档
-- [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) - 故障排查
-
-### 数据库文档
-- [database/FILES.md](./database/FILES.md) - 数据库文件清单
-- [database/README.md](./database/README.md) - 完整数据库文档
-- [database/QUICK-START.md](./database/QUICK-START.md) - 快速开始指南
+- **进程管理**: PM2（可选）
 
 ---
 
@@ -229,17 +357,36 @@ docker-compose logs -f
 
 ---
 
-## 📞 技术支持
+## 🤝 贡献
 
-- **GitHub**: https://github.com/AQzzzQA/permissions-system
-- **Issues**: https://github.com/AQzzzQA/permissions-system/issues
-- **Email**: support@example.com
+欢迎贡献！请遵循以下步骤：
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+### 贡献指南
+
+- 遵循现有代码风格
+- 添加必要的测试
+- 更新相关文档
+- 提交清晰的commit message
 
 ---
 
 ## 📄 许可证
 
-MIT License
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+
+---
+
+## 📞 技术支持
+
+- **GitHub**: https://github.com/AQzzzQA/permissions-system
+- **Issues**: https://github.com/AQzzzQA/permissions-system/issues
+- **Email**: support@example.com
 
 ---
 
