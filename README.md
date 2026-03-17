@@ -21,6 +21,7 @@
 - [技术栈](#技术栈)
 - [测试](#测试)
 - [常见问题](#常见问题)
+- [故障排查](#故障排查)
 - [贡献](#贡献)
 - [许可证](#许可证)
 
@@ -176,6 +177,8 @@ permissions-system/
 ├── API.md                   # API 文档
 ├── TROUBLESHOOTING.md       # 故障排查
 ├── GETTING-STARTED.md       # 入门指南（小白专用）
+├── FINAL-FIX.md             # 登录问题修复报告
+├── LOGIN-DEBUG-LOG.md       # 登录调试日志
 └── README.md                # 项目文档
 ```
 
@@ -215,6 +218,7 @@ docker exec -i permissions_db mysql -uroot -prootpassword permissions_system < d
 - `menus` - 菜单表
 - `role_permissions` - 角色权限关联表
 - `role_menus` - 角色菜单关联表
+- `user_roles` - 用户角色关联表
 
 ### 默认账号
 
@@ -257,6 +261,13 @@ docker exec -i permissions_db mysql -uroot -prootpassword permissions_system < d
 | [database/FILES.md](./database/FILES.md) | 数据库文件清单 | 所有用户 |
 | [database/README.md](./database/README.md) | 完整数据库文档 | 开发人员 |
 | [database/QUICK-START.md](./database/QUICK-START.md) | 快速开始指南 | 所有用户 |
+
+### 修复和调试文档
+
+| 文档 | 描述 |
+|-----|------|
+| [FINAL-FIX.md](./FINAL-FIX.md) | 登录问题修复报告（2026-03-17） |
+| [LOGIN-DEBUG-LOG.md](./LOGIN-DEBUG-LOG.md) | 登录调试日志 |
 
 ---
 
@@ -378,6 +389,28 @@ VITE_API_BASE_URL=http://localhost:8001/api
 
 ---
 
+## 🐛 故障排查
+
+### 登录问题修复（2026-03-17）
+
+如果遇到登录失败，请参考 [FINAL-FIX.md](./FINAL-FIX.md) 查看完整的修复报告。
+
+**已修复的问题**:
+- ✅ 数据库字段缺失（username, is_superuser）
+- ✅ 密码哈希无效（重新生成 bcryptjs 哈希）
+- ✅ API 连接测试验证通过
+
+**如果浏览器显示 "Network Error"**:
+1. 强制刷新：`Ctrl+Shift+R`（Windows）或 `Cmd+Shift+R`（Mac）
+2. 清除缓存：`Ctrl+Shift+Delete`，选择 "缓存图片和文件"
+3. 重启前端容器：`docker-compose restart frontend`
+
+### 更多故障排查
+
+详细故障排查指南请查看: [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+
+---
+
 ## 🐛 已修复问题
 
 ### GitHub Issue #3: 登录后页面点击无反应 ✅
@@ -389,6 +422,11 @@ VITE_API_BASE_URL=http://localhost:8001/api
 - 优化响应式布局
 - 修复Ant Design组件样式
 - 添加移动端媒体查询
+
+### 登录问题修复（2026-03-17）✅
+- 修复数据库字段缺失（username, is_superuser）
+- 修复密码哈希无效（重新生成有效哈希）
+- API 连接测试验证通过
 
 ---
 
@@ -435,5 +473,5 @@ VITE_API_BASE_URL=http://localhost:8001/api
 
 **版本**: v1.0.0
 **状态**: ✅ 生产就绪
-**最后更新**: 2026-03-17
+**最后更新**: 2026-03-18
 **维护人员**: 乐盟技术团队
